@@ -1,46 +1,14 @@
+
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-from flask_sqlalchemy import SQLAlchemy
+from config import Config
+from models import db, User, Message, Events, Votes
 from datetime import datetime
 
 app = Flask(__name__)
-# app.config['SECRET_KEY'] = 'your_secret_key_here'
-app.secret_key = "my secrete key here"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config.from_object(Config)
+db.init_app(app)
 
-db = SQLAlchemy(app)
 
-#keeping the user information
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    password = db.Column(db.String(120), nullable=False)
-    position = db.Column(db.String(200), default="member")
-    email = db.Column(db.String(200), nullable=False)
-    img_url = db.Column(db.String(200), default="/static/sample.jpg")
-    year = db.Column(db.String(200), default="1")
-    confirmed = db.Column(db.String(10), default="no")
-
-#messeges by admin
-class Message(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(80), unique=True, nullable=False)
-    body = db.Column(db.String(120), nullable=False)
-    datecreated = db.Column(db.DateTime, default=datetime.utcnow)
-    creator = db.Column(db.String(200), nullable=False)
-
-#events
-class Events(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(200), nullable=False)
-    content = db.Column(db.Text, nullable=False)
-    date = db.Column(db.String(200), nullable=False)
-    
-class Votes(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    voter = db.Column(db.String(200), nullable=False)
-    candidate = db.Column(db.String(200), nullable=False)
-    datevoted = db.Column(db.DateTime, default=datetime.utcnow)
     
 
 # -------------------- Member/User Routes --------------------
@@ -66,13 +34,13 @@ def member_login():
             #verifying if the user an admin
             if user.position == "admin":
                 flash('Login as admin successful!', 'success')
-                return redirect(url_for('admin_dashboard'))
+                return redirect(url_for('admin_darshboard'))
             
             elif user.position == "developer":
                 return redirect(url_for('developer_darshboard'))
             flash('Login successful!', 'success')
             #return redirect(url_for('member_darshboard'))
-            return render_template("darshboard.html")
+            return redirect(url_for("member_darshboard"))
         else:
             flash('Invalid username or password', 'danger')
     return render_template('/home/login.html')
@@ -152,7 +120,7 @@ def admin_darshboard():
         return redirect(url_for('login'))
     users = User.query.order_by(User.id.desc()).all()
     users_count = User.query.count()
-    return render_template('admin_darshboard.html',users_count=users_count, username=session.get('username'), year=session.get('year'), img_url=session.get('ing_url'), email=session.get('email'), users=users)
+    return render_template('admin/admin_darshboard.html',users_count=users_count, username=session.get('username'), year=session.get('year'), img_url=session.get('ing_url'), email=session.get('email'), users=users)
 
 @app.route("/developer/")
 def developer():

@@ -1,0 +1,63 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #0f172a; /* Dark theme */
+  color: #e2e8f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.register-card {
+  background: #1e293b;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+  width: 100%;
+  max-width: 450px;
+}
+
+.register-card h2 {
+  color: #38bdf8; /* Sky Blue */
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  color: #38bdf8;
+}
+.logo img {
+  display: block;
+  margin: 0 auto 1rem auto;
+  width: 200px; /* Adjust size as needed */
+  height: auto;
+}
+
+.form-control {
+  background: #0f172a;
+  color: #e2e8f0;
+  border: 1px solid #334155;
+}
+
+.form-control:focus {
+  background: #0f172a;
+  color: #e2e8f0;
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 0.25rem rgba(56,189,248,0.25);
+}
+
+.btn-sky {
+  background: #38bdf8;
+  color: #0f172a;
+  font-weight: bold;
+}
+.btn-sky:hover {
+  background: #0ea5e9;
+  color: white;
+}
+
+.error {
+  color: #f87171;
+  font-size: 0.9rem;
+  display: block;
+}

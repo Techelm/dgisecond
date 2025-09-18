@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Member darshboard{% endblock %}
+
+{% block darshboard %}
+    <section class="section active" id="section-dashboard">
+        <div class="row g-3 g-lg-4 mb-2">
+          <div class="col-6 col-lg-3">
+            <div class="card p-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="text-uppercase small" style="color:var(--muted);">Members</div>
+                  <div class="h4 mb-0">1,245</div>
+                </div>
+                <i class="bi bi-people h3 mb-0" style="color:var(--accent);"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="card p-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="text-uppercase small" style="color:var(--muted);">Events</div>
+                  <div class="h4 mb-0">8 Upcoming</div>
+                </div>
+                <i class="bi bi-calendar-event h3 mb-0" style="color:var(--accent);"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="card p-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="text-uppercase small" style="color:var(--muted);">Resources</div>
+                  <div class="h4 mb-0">320</div>
+                </div>
+                <i class="bi bi-book h3 mb-0" style="color:var(--accent);"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="card p-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="text-uppercase small" style="color:var(--muted);">Messages</div>
+                  <div class="h4 mb-0">56</div>
+                </div>
+                <i class="bi bi-chat-dots h3 mb-0" style="color:var(--accent);"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-3 g-lg-4">
+          <div class="col-lg-7">
+            <div class="card p-3 p-lg-4 h-100">
+              <h5 class="card-title mb-3">Announcements</h5>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item bg-transparent text-body">
+                  <i class="bi bi-megaphone me-2" style="color:var(--accent);"></i>
+                  Annual Imaging Conference — <strong>Oct 12, 2025</strong>
+                </li>
+                <li class="list-group-item bg-transparent text-body">
+                  <i class="bi bi-journal-text me-2" style="color:var(--accent);"></i>
+                  Journal Release: <em>Advances in Radiology</em>
+                </li>
+                <li class="list-group-item bg-transparent text-body">
+                  <i class="bi bi-cpu me-2" style="color:var(--accent);"></i>
+                  Webinar: AI in Medical Imaging — Registration Open
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <footer class="text-center mt-4">© 2025 Society of Medical Imaging</footer>
+      </section>
+
+
+{% endblock %}

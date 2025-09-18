@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{%block title%}</title>
+
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/dashboard.css">
+  {% block head %}{% endblock %}
+</head>
+<body class="theme-dark">
+  <!-- Mobile overlay -->
+  <div id="overlay"></div>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <button id="mobileMenuBtn" class="btn icon-btn d-lg-none" aria-label="Open menu">
+      <i class="bi bi-list"></i>
+    </button>
+
+    <div class="d-none d-lg-flex align-items-center gap-2">
+      <button id="collapseSidebarBtn" class="btn icon-btn" data-bs-toggle="tooltip" data-bs-title="Collapse sidebar">
+        <i class="bi bi-layout-sidebar-inset"></i>
+      </button>
+      <span class="pill"><i class="bi bi-activity"></i> Society of Medical Imaging</span>
+    </div>
+
+    <form id="searchForm" class="ms-auto me-2 searchbar d-none d-md-flex" role="search">
+      <input id="searchInput" class="form-control form-control-sm" type="search" placeholder="Search resources, members, events…" aria-label="Search">
+    </form>
+
+    <div class="dropdown me-2">
+      <button class="btn icon-btn" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Notifications">
+        <i class="bi bi-bell"></i>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end p-2" style="min-width: 320px;">
+        <li class="dropdown-header">Notifications</li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#"><i class="bi bi-calendar-event me-2"></i>New event: AI in Imaging (Oct 12)</a></li>
+        <li><a class="dropdown-item" href="#"><i class="bi bi-chat-dots me-2"></i>2 new messages</a></li>
+        <li><a class="dropdown-item" href="#"><i class="bi bi-file-earmark-medical me-2"></i>Journal update available</a></li>
+      </ul>
+    </div>
+
+    <div class="dropdown">
+      <button class="btn d-flex align-items-center gap-2 icon-btn" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="https://i.pravatar.cc/40?img=68" class="rounded-circle" width="28" height="28" alt="Profile">
+        <span class="d-none d-sm-inline">Evance</span>
+        <i class="bi bi-caret-down-fill small"></i>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" href="#" data-section="profile"><i class="bi bi-person me-2"></i>Profile</a></li>
+        <li><a class="dropdown-item" href="#" data-section="settings"><i class="bi bi-gear me-2"></i>Settings</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><button id="themeToggle" class="dropdown-item" type="button"><i class="bi bi-moon-stars me-2"></i>Toggle Theme</button></li>
+        <li><button id="logoutBtn" class="dropdown-item text-danger" type="button"><i class="bi bi-box-arrow-right me-2"></i>Logout</button></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="app" id="appRoot">
+    <!-- Sidebar -->
+    <aside id="sidebar" aria-label="Sidebar navigation">
+      <div class="brand">
+        <div class="logo"><i class="bi bi-hospital"></i></div>
+        <div>
+          <h1>Society of Medical Imaging</h1>
+          <small>{%block member%}{%endblock%}</small>
+        </div>
+      </div>
+
+      <div class="nav-section-title">Main</div>
+      <nav class="side-nav nav flex-column gap-1">
+           
+     {%block slidebarlinks%}{%endblock%}
+     
+
+      <div class="nav-section-title">Account</div>
+      <nav class="side-nav nav flex-column gap-1">
+        <a href="#" class="nav-link" data-section="profile" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Profile">
+          <i class="bi bi-person-circle"></i><span class="label">Profile</span>
+        </a>
+        <a href="#" class="nav-link" data-section="settings" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Settings">
+          <i class="bi bi-gear"></i><span class="label">Settings</span>
+        </a>
+        <a href="logout" class="nav-link text-danger" id="logoutLink" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Logout">
+          <i class="bi bi-box-arrow-right"></i><span class="label">Logout</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <main class="p-3 p-lg-4">
+      <!-- Dashboard -->
+
+      {% block darshboard %}{% endblock %}
+
+      
+      <!-- Resources -->
+      <section class="section" id="section-resources">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="card-title mb-0">Resources</h5>
+          <div class="input-group" style="max-width: 360px;">
+            <span class="input-group-text bg-transparent border-end-0"><i class="bi bi-search" style="color:var(--accent);"></i></span>
+            <input type="text" class="form-control border-start-0" placeholder="Filter by title, tag…">
+          </div>
+        </div>
+        <div class="row g-3 g-lg-4">
+          <div class="col-md-6 col-xl-4">
+            <div class="card p-3 h-100">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <div class="fw-bold">Chest X-Ray Positioning Guide</div>
+                  <small class="text-secondary">PDF • Radiography</small>
+                </div>
+                <span class="pill"><i class="bi bi-file-earmark-pdf"></i> Download</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-xl-4">
+            <div class="card p-3 h-100">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <div class="fw-bold">CT Dose Reference Levels</div>
+                  <small class="text-secondary">Article • Safety</small>
+                </div>
+                <span class="pill"><i class="bi bi-box-arrow-up-right"></i> Open</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-xl-4">
+            <div class="card p-3 h-100">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <div class="fw-bold">MRI Artifact Atlas</div>
+                  <small class="text-secondary">Slides • MRI</small>
+                </div>
+                <span class="pill"><i class="bi bi-cloud-arrow-down"></i> Get</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Messages -->
+      <section class="section" id="section-messages">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="card-title mb-0">Messages</h5>
+          <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#composeModal">
+            <i class="bi bi-pencil-square me-1"></i>Compose
+          </button>
+        </div>
+        <div class="card">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item bg-transparent text-body d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center gap-2">
+                <input class="form-check-input me-2" type="checkbox">
+                <div><strong>Admin</strong> — Welcome to the Society! <small class="text-secondary">2h</small></div>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <button class="btn btn-sm icon-btn" data-bs-toggle="tooltip" data-bs-title="Star"><i class="bi bi-star"></i></button>
+                <button class="btn btn-sm icon-btn" data-bs-toggle="tooltip" data-bs-title="Archive"><i class="bi bi-archive"></i></button>
+                <button class="btn btn-sm icon-btn text-danger" data-bs-toggle="tooltip" data-bs-title="Delete"><i class="bi bi-trash"></i></button>
+              </div>
+            </li>
+            <li class="list-group-item bg-transparent text-body d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center gap-2">
+                <input class="form-check-input me-2" type="checkbox">
+                <div><strong>Events Team</strong> — Registration link for AI webinar <small class="text-secondary">Yesterday</small></div>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <button class="btn btn-sm icon-btn"><i class="bi bi-star"></i></button>
+                <button class="btn btn-sm icon-btn"><i class="bi bi-archive"></i></button>
+                <button class="btn btn-sm icon-btn text-danger"><i class="bi bi-trash"></i></button>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Members -->
+      <section class="section" id="section-members">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="card-title mb-0">Members</h5>
+          <div>
+            <button class="btn btn-sm icon-btn"><i class="bi bi-download"></i></button>
+            <button class="btn btn-sm icon-btn"><i class="bi bi-person-plus"></i></button>
+          </div>
+        </div>
+        <div class="card p-0">
+          <div class="table-responsive">
+            <table class="table table-borderless align-middle mb-0">
+              <thead>
+                <tr class="text-secondary">
+                  <th>Name</th><th>Role</th><th>Department</th><th>Email</th><th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Dr. Sarah M.</td><td>Radiologist</td><td>Chest Imaging</td><td>sarah@example.com</td>
+                  <td class="text-end">
+                    <button class="btn btn-sm icon-btn"><i class="bi bi-envelope"></i></button>
+                    <button class="btn btn-sm icon-btn"><i class="bi bi-person-badge"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Prof. James K.</td><td>Researcher</td><td>AI Lab</td><td>james@example.com</td>
+                  <td class="text-end">
+                    <button class="btn btn-sm icon-btn"><i class="bi bi-envelope"></i></button>
+                    <button class="btn btn-sm icon-btn"><i class="bi bi-person-badge"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Evance S.</td><td>Student</td><td>Medical Imaging</td><td>evance@example.com</td>
+                  <td class="text-end">
+                    <button class="btn btn-sm icon-btn"><i class="bi bi-envelope"></i></button>
+                    <button class="btn btn-sm icon-btn"><i class="bi bi-person-badge"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Events -->
+      <section class="section" id="section-events">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="card-title mb-0">Events</h5>
+          <button class="btn btn-sm icon-btn"><i class="bi bi-calendar-plus"></i></button>
+        </div>
+        <div class="row g-3 g-lg-4">
+          <div class="col-md-6">
+            <div class="card p-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <div class="fw-bold">AI in Medical Imaging</div>
+                  <small class="text-secondary">Oct 12, 2025 • Webinar</small>
+                </div>
+                <button class="btn btn-sm btn-primary">Register</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card p-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <div class="fw-bold">Annual Imaging Conference</div>
+                  <small class="text-secondary">Nov 22–24, 2025 • Blantyre</small>
+                </div>
+                <button class="btn btn-sm btn-outline-primary">Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Profile -->
+      <section class="section" id="section-profile">
+        <h5 class="card-title mb-3">Profile</h5>
+        <div class="card p-3 p-lg-4">
+          <form class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Full Name</label>
+              <input class="form-control" value="Evance Saidi">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Email</label>
+              <input class="form-control" value="evance@example.com">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Role</label>
+              <select class="form-select">
+                <option>Student</option><option>Radiographer</option><option>Radiologist</option><option>Researcher</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Department</label>
+              <input class="form-control" value="Medical Imaging">
+            </div>
+            <div class="col-12">
+              <label class="form-label">Bio</label>
+              <textarea class="form-control" rows="3" placeholder="Tell us about you…"></textarea>
+            </div>
+            <div class="col-12">
+              <button class="btn btn-primary" type="button" id="saveProfileBtn"><i class="bi bi-check2-circle me-1"></i>Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Settings -->
+      <section class="section" id="section-settings">
+        <h5 class="card-title mb-3">Settings</h5>
+        <div class="card p-3 p-lg-4">
+          <div class="form-check form-switch mb-2">
+            <input class="form-check-input" type="checkbox" id="emailNotifSwitch" checked>
+            <label class="form-check-label" for="emailNotifSwitch">Email notifications</label>
+          </div>
+          <div class="form-check form-switch mb-3">
+            <input class="form-check-input" type="checkbox" id="smsNotifSwitch">
+            <label class="form-check-label" for="smsNotifSwitch">SMS notifications</label>
+          </div>
+          <button class="btn btn-outline-primary" type="button" id="resetPrefsBtn"><i class="bi bi-arrow-counterclockwise me-1"></i>Reset Preferences</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Compose Modal -->
+  <div class="modal fade" id="composeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Compose Message</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-2">
+            <label class="form-label">To</label>
+            <input class="form-control" placeholder="Recipient">
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Subject</label>
+            <input class="form-control" placeholder="Subject">
+          </div>
+          <div>
+            <label class="form-label">Message</label>
+            <textarea class="form-control" rows="4" placeholder="Write your message…"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" type="submit">Send</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toasts -->
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1080;">
+    <div id="searchToast" class="toast align-items-center text-bg-dark border-0" role="status" aria-live="polite" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          <i class="bi bi-search me-2" style="color:var(--accent);"></i>
+          Searching…
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts (Bootstrap bundle includes Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    (function () {
+      const body = document.body;
+      const app = document.getElementById('appRoot');
+      const overlay = document.getElementById('overlay');
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const collapseBtn = document.getElementById('collapseSidebarBtn');
+      const themeToggle = document.getElementById('themeToggle');
+      const logoutBtn = document.getElementById('logoutBtn');
+      const logoutLink = document.getElementById('logoutLink');
+      const searchForm = document.getElementById('searchForm');
+      const searchToastEl = document.getElementById('searchToast');
+
+      /* ---------- INIT STATE (localStorage) ---------- */
+      const savedTheme = localStorage.getItem('smi_theme');
+      if (savedTheme === 'light') body.classList.add('theme-light');
+      const savedCollapsed = localStorage.getItem('smi_sidebar_collapsed');
+      if (savedCollapsed === '1') app.classList.add('collapsed');
+
+      /* ---------- Tooltips (for collapsed icons) ---------- */
+      const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+      let tooltipList = tooltipTriggerList.map(el => new bootstrap.Tooltip(el));
+      const refreshTooltips = () => {
+        tooltipList.forEach(t => t.dispose());
+        tooltipList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+          .map(el => new bootstrap.Tooltip(el));
+      };
+
+      /* ---------- Sidebar: mobile open/close ---------- */
+      mobileMenuBtn.addEventListener('click', () => {
+        body.classList.toggle('sidebar-open');
+      });
+      overlay.addEventListener('click', () => body.classList.remove('sidebar-open'));
+
+      /* ---------- Sidebar: desktop collapse ---------- */
+      if (collapseBtn) {
+        collapseBtn.addEventListener('click', () => {
+          app.classList.toggle('collapsed');
+          localStorage.setItem('smi_sidebar_collapsed', app.classList.contains('collapsed') ? '1' : '0');
+          refreshTooltips();
+        });
+      }
+
+      /* ---------- Theme toggle ---------- */
+      if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+          body.classList.toggle('theme-light');
+          localStorage.setItem('smi_theme', body.classList.contains('theme-light') ? 'light' : 'dark');
+        });
+      }
+
+      /* ---------- Logout ---------- */
+      function handleLogout(e) {
+        e.preventDefault();
+        if (confirm('Log out of the Society of Medical Imaging portal?')) {
+          // Placeholder: wire up to your auth later
+          alert('You have been logged out (demo).');
+        }
+      }
+      logoutBtn?.addEventListener('click', handleLogout);
+      logoutLink?.addEventListener('click', handleLogout);
+
+      /* ---------- Section router ---------- */
+      const links = document.querySelectorAll('a.nav-link[data-section], .dropdown-item[data-section]');
+      const sections = document.querySelectorAll('.section');
+      function showSection(name) {
+        sections.forEach(s => s.classList.toggle('active', s.id === `section-${name}`));
+        links.forEach(l => l.classList.toggle('active', l.dataset.section === name));
+        // Close mobile sidebar after navigation
+        body.classList.remove('sidebar-open');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      links.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const name = link.dataset.section;
+          if (name) showSection(name);
+        });
+      });
+
+      /* ---------- Search demo ---------- */
+      if (searchForm && searchToastEl) {
+        const toast = new bootstrap.Toast(searchToastEl, { delay: 1200 });
+        searchForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          toast.show();
+        });
+      }
+
+      /* ---------- Profile save demo ---------- */
+      document.getElementById('saveProfileBtn')?.addEventListener('click', () => {
+        alert('Profile saved (demo).');
+      });
+
+      /* ---------- Settings reset demo ---------- */
+      document.getElementById('resetPrefsBtn')?.addEventListener('click', () => {
+        document.getElementById('emailNotifSwitch').checked = true;
+        document.getElementById('smsNotifSwitch').checked = false;
+        alert('Preferences reset (demo).');
+      });
+
+      /* ---------- Modal submit demo ---------- */
+      const composeModal = document.getElementById('composeModal');
+      composeModal?.querySelector('form')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        bootstrap.Modal.getInstance(composeModal)?.hide();
+        alert('Message sent (demo).');
+      });
+
+      /* ---------- Accessibility: close sidebar with ESC ---------- */
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') body.classList.remove('sidebar-open');
+      });
+    })();
+  </script>
+</body>
+</html>
